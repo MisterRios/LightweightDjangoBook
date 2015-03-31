@@ -1,7 +1,9 @@
 from django.conf.urls import include, url
-from rest_framework import obtain_auth_token
+from rest_framework.auth_token.views import obtain_auth_token
+
+from board.urls import router
 
 urlpatterns = [
     url(r'^api/token/', obtain_auth_token, name='api_token'),
-
+    url(r'^api/', include(router.urls))
 ]
