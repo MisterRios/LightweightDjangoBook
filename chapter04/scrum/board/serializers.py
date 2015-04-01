@@ -27,7 +27,7 @@ class SprintSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
 
     assigned = serializers.SlugRelatedField(
-        slug_field=User.USERNAME_FIELD, required=False)
+        slug_field=User.USERNAME_FIELD, required=False, read_only=True)
     status_display = serializers.SerializerMethodField('get_status_display')
     links = serializers.SerializerMethodField('get_links')
 
@@ -43,9 +43,9 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def get_links(self, obj):
         request = self.context['request']
-        return {
+        links = {
             'self' : reverse('task-detail',
-            kwargs={'pk': obj.pk}, request=request}),
+            kwargs={'pk': obj.pk}, request=request),
             'sprint': None,
             'assigned': None,
         }
@@ -73,5 +73,5 @@ class UserSerializer(serializers.ModelSerializer):
         username = obj.get_username()
         return {
             'self' : reverse('user-detail',
-            kwargs={User.USERNAME_FIELD: username}, request=request})
+            kwargs={User.USERNAME_FIELD: username}, request=request)
         }
