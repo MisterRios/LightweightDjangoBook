@@ -28,7 +28,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     assigned = serializers.SlugRelatedField(
         slug_field=User.USERNAME_FIELD, required=False, read_only=True)
-    status_display = serializers.SerializerMethodField('get_status_display')
+    status_display = serializers.SerializerMethodField()
     links = serializers.SerializerMethodField()
     class Meta:
         model = Task
